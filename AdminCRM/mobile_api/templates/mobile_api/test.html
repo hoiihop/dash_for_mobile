@@ -1,0 +1,13 @@
+{% load model_name %}
+
+{% get_fields_name feedbacks.0 as fields_name %}
+{% for field in fields_name %}
+    {{ field }}
+{% endfor %}
+
+<!-- {{ feedbacks.count }} -->
+
+<!-- {% for obj in feedbacks %} 
+    {{ obj.user_id }}
+    
+{% endfor %} -->

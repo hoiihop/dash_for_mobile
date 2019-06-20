@@ -1,0 +1,43 @@
+{% extends 'mobile_api/_list.html' %}
+
+{% block btn_action %}
+<div class="col-md-offset-11">                
+  <a href="{% url 'push_create' %}" class="btn btn-primary"><i class="fa fa-plus-square"></i> Create </a>
+</div>
+{% endblock %}
+
+{% block create_table %}
+{% load model_name %}
+<thead>
+        <tr>                  
+            <th>№</th>                 
+            <th>{% field_name object_list.0 'created_time' %}</th>                 
+            <th>{% field_name object_list.0 'user_id' %}</th>                 
+            <th>{% field_name object_list.0 'is_read' %}</th>                 
+            <th width="50%">{% field_name object_list.0 'title' %}</th>                 
+            <!-- <th>{% field_name object_list.0 'content' %}</th>                              -->
+            <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for object in object_list %}                  
+        <tr>
+          <td>{{ object.id }}</td>
+          <td>{{ object.created_time|date:"d.m.Y h:m" }}</td>
+          <td>{{ object.user_id }}</td>                    
+          <td>
+              {% if object.is_read %}
+                  <span class="label label-success">Так</span>
+              {% else %}
+                  <span class="label label-danger">Ні</span>
+              {% endif %}
+          </td>
+          <td>{{ object.title|truncatechars:50 }}</td>
+          <!-- <td>{{ object.content|truncatechars:9 }}</td>                        -->
+          <td>
+            <a href="{{ object.get_absolute_url_update }}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+{% endblock %}

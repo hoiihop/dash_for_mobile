@@ -1,0 +1,44 @@
+{% extends "mobile_api/base.html" %}
+{% load model_name %}
+
+{% block title %} News Form {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">     
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">            
+            <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            <br />
+            <form action="{% url 'news_create' %}" method="POST" class="form-horizontal form-label-left">
+              {% csrf_token %}
+              {{ f_news.as_p }}
+              {{ f_news_en.as_p }}
+              {{ f_news_ru.as_p }}
+              {{ f_news_uk.as_p }}
+              <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                <button type="submit" name="_cancel" class="btn btn-primary">Cancel</button>              
+                <button type="submit" class="btn btn-success">Save</button>
+              </div>               
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+{% endblock javascripts %}

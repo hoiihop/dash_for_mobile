@@ -1,0 +1,42 @@
+{% extends 'mobile_api/_list.html' %}
+
+{% block btn_action %}
+<div class="col-md-offset-11">                
+  <a href="{% url 'news_create' %}" class="btn btn-primary"><i class="fa fa-plus-square"></i> Create </a>
+</div>
+{% endblock %}
+
+{% block create_table %}
+{% load model_name %}
+<thead>
+    <tr>
+        {% for field_name in object_list.0.get_fields_name %}
+        <th>{{ field_name }}</th>                  
+        {% endfor %}
+        <th> </th>
+    </tr>
+</thead>
+<tbody>
+{% for object in object_list %}
+    <tr>
+        {% for name, value in object.get_fields_name_value %}                    
+        {% field_type object name as type %}                      
+        {% if value|lower == 'true' %}
+            <td><span class="badge bg-green">Success</span></td>
+        {% elif value|lower == 'false' %}
+            <td><span class="badge bg-purple">Inactive</span></td>
+        {% elif type == 'DateTimeField' %}                        
+            <td>{{ value|date:"h:m d.m.Y" }}</td>
+        {% else %}
+            <td>{{ value }}</td>
+        {% endif %}
+        {% endfor %}                    
+        <td>
+        <a href="{{ object.get_absolute_url_detail }}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+        <a href="{{ object.get_absolute_url_edit }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+        <a href="{{ object.get_absolute_url_delete }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+        </td>
+    </tr>
+{% endfor %}
+</tbody>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "mobile_api/base.html" %}
+
+{% block title %} News List {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">           
+      <div class="col-md-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>{{ news.internal_description }}</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li>
+                    {% if news.published %}
+                      <span class="badge bg-green">Active</span>
+                    {% else %}
+                      <span class="badge bg-purple">Inactive</span>
+                    {% endif %}
+                  </li>          
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <ul class="list-unstyled msg_list">
+                    {% for img in news_img %} 
+                      {% if img.lang_abbr.lang_abbr == 'en' %}
+                        <li>
+                        <a>
+                            <span class="image">
+                            <img src="{{ img.preview_img_url }}" alt="" class="img-thumbnail rounded float-left" width="150px" height="150px">
+                            </span>
+                            <span>
+                            <span>{{ news_en.title|title }}</span>
+                            <span class="time">{{ img.lang_abbr.lang_abbr }}</span>
+                            </span>
+                            <span class="message">
+                            {{ news_en.content }}
+                            </span>
+                        </a>
+                    </li>
+                      {% elif img.lang_abbr.lang_abbr == 'ru' %}
+                        <li>
+                        <a>
+                            <span class="image">
+                            <img src="{{ img.preview_img_url }}" alt="" class="img-thumbnail rounded float-left" width="150px" height="150px">
+                            </span>
+                            <span>
+                            <span>{{ news_ru.title|title }}</span>
+                            <span class="time">{{ img.lang_abbr.lang_abbr }}</span>
+                            </span>
+                            <span class="message">
+                            {{ news_ru.content }}
+                            </span>
+                        </a>
+                    </li>
+                      {% elif img.lang_abbr.lang_abbr == 'uk' %}
+                        <li>
+                        <a>
+                            <span class="image">
+                            <img src="{{ img.preview_img_url }}" alt="" class="img-thumbnail rounded float-left" width="150px" height="150px">
+                            </span>
+                            <span>
+                            <span>{{ news_uk.title|title }}</span>
+                            <span class="time">{{ img.lang_abbr.lang_abbr }}</span>
+                            </span>
+                            <span class="message">
+                            {{ news_uk.content }}
+                            </span>
+                        </a>
+                    </li>
+                      {% endif %}                  
+                    {% endfor %}                                           
+                </ul>
+              </div>
+            </div> 
+      
+  </div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+{% endblock javascripts %}

@@ -1,0 +1,70 @@
+{% extends "mobile_api/base.html" %}
+{% load model_name %}
+
+{% block title %} News List {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+  {% load static %}
+  <link href="{% static '/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">  
+  <link href="{% static '/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
+  
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">     
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              {% if object_list %}<h2>{{ object_list.0.get_model_name }}</h2>{% endif %}              
+                {% block btn_action %}
+                {% endblock %}                                     
+              <div class="clearfix"></div>              
+            </div>            
+            {% if object_list %}
+            <div class="x_content">
+              <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                {% block create_table %}
+                {% endblock %}
+              </table>
+            </div>
+            {% else %}
+              <h3>No content available</h3>
+            {% endif %}              
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+  {% load static %}
+  <script>
+      // настройка таблиц DataTables.js
+
+        $(document).ready(function() {
+            $('#datatable-responsive').DataTable( {
+                // "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+
+                "order": [[ 0, "desc" ]],   // сортировка столбцов
+                stateSave: true,            // сохраняет сделанные пользователем изменения
+                "pagingType": "simple_numbers",
+                "columnDefs": [
+                    { "width": "5%", "targets": 0 }
+                ]
+            } );
+        } );
+  </script>
+  <!-- Datatables -->
+  <script src="{% static '/vendors/datatables.net/js/jquery.dataTables.js' %}"></script>
+  <script src="{% static '/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+  <script src="{% static '/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+  <script src="{% static '/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+{% endblock javascripts %}

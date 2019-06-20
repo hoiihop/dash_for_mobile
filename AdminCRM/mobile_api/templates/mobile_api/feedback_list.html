@@ -1,0 +1,55 @@
+{% extends 'mobile_api/_list.html' %}
+
+{% block create_table %}
+{% load model_name %}
+<thead>
+    <tr>                  
+        <th>№</th>                 
+        <th>{% field_name object_list.0 'created_dt' %}</th>                 
+        <th>{% field_name object_list.0 'device_id' %}</th>                 
+        <th>{% field_name object_list.0 'subject' %}</th>                 
+        <th>{% field_name object_list.0 'satisfaction_level' %}</th>                 
+        <th>{% field_name object_list.0 'id_service_station' %}</th>                 
+        <th>{% field_name object_list.0 'answer_id' %}</th>
+        <th>Пользователь</th>
+        <th> </th>
+    </tr>
+</thead>
+<tbody>
+    {% for object in object_list %}                  
+    <tr>
+        <td>{{ object.id }}</td>
+        <td>{{ object.created_dt|date:"d.m.Y h:m" }}</td>
+        <td>{{ object.user_phone }}</td>
+        <td>{{ object.subject }}</td>
+        <td>{{ object.satisfaction_level }}</td>
+        <td>{{ object.id_service_station }}</td>
+        <td>
+        {% if object.answer_id %}
+            <span class="label label-success">Так</span>
+        {% else %}
+            <span class="label label-danger">Ні</span>
+        {% endif %}
+        </td>
+        <td>
+            {% if object.user_id %}
+            <i>True</i>
+            {% else %}
+            <i>False</i>
+            {% endif %}
+        </td>
+
+
+        <td>
+        <a href="{{ object.get_absolute_url_update }}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ block.super }}
+{% endblock %}
+

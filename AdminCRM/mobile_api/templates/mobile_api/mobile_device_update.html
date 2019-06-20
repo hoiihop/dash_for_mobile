@@ -1,0 +1,60 @@
+{% extends "mobile_api/base.html" %}
+{% load model_name %}
+
+{% block title %} News List {% endblock title %}
+
+{% block stylesheets %}
+  {{ block.super }}
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="right_col" role="main">
+    <div class="">     
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Номер телефона - {{ object.phone_number }}</h2>      
+            <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            <br />
+            <form action="{{ mobile_device.get_absolute_url_update }}" method="POST" class="form-horizontal form-label-left">
+              {% csrf_token %}   
+              {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    {{ error }}
+                  </div>    
+                {% endfor %}
+              {% endif %}               
+              <h2>{% field_name object 'status' %}</h2>          
+
+              {% for field in form.status %}
+                <div class="form-group">                  
+                  {{ field.label }}
+                  {{ field }}
+                </div>
+              {% endfor %}          
+              <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                <a class="btn btn-primary" href="{% url 'mobile_device_list_view' %}" role="button">Назад</a>
+                <button type="submit" class="btn btn-success">Сохранить</button>                             
+                <a href="{% url 'delete_select_device' object.user_id %}" class="btn btn-danger"><i class="fa fa-exclamation-triangle"></i> Удалить пользователя</a>
+                
+              </div>               
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ block.super }}
+{% endblock javascripts %}

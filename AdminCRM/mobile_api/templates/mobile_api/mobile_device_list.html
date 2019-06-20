@@ -1,0 +1,38 @@
+{% extends 'mobile_api/_list.html' %}
+
+{% block btn_action %}
+<div class="col-md-offset-10">                
+  <a href="{% url 'mobile_device_repair' %}" class="btn btn-warning"><i class="fa fa-wrench"></i> Исправить записи <span class="badge bg-red">{{ device_errors }}</span> </a>
+</div>
+{% endblock %}
+
+{% block create_table %}
+{% load model_name %}
+<thead>
+    <tr>
+        <th>{% field_name object_list.0 'id' %}</th>  
+        <th>{% field_name object_list.0 'status' %}</th>
+        <th>{% field_name object_list.0 'phone_number' %}</th>                  
+        <th> </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for object in object_list %}
+    <tr>
+        <td>{{ object.id }}</td>
+        {% if object.status == 1 %}
+        <td><span class="badge bg-green">Active</span></td>
+        {% elif object.status == 2 %}
+        <td><span class="badge bg-red">Service</span></td>
+        {% else %}
+        <td><span class="badge bg-grey">Non active</span></td>              
+        {% endif %}              
+        <td>{{ object.phone_number }}</td>                    
+        <td>                  
+        <a href="{{ object.get_absolute_url_update }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>              
+        <a href="{{ object.get_absolute_url_delete }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+{% endblock %}
